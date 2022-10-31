@@ -1,6 +1,7 @@
-console.log("welcome to MyTicTacToe.in")
-let music = new Audio("music.mp3")
+//Add Music
+let gamestart = new Audio("game_start.mp3")
 let audioturn = new Audio("ting.mp3")
+let win = new Audio("win.mp3")
 let gameover = new Audio("gameover.mp3")
 let turn = "X"
 let isgameover = false;
@@ -29,15 +30,16 @@ const checkWin = ()=>{
             isgameover = true
             document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = "200px"
             document.querySelector('.line').style.width = "20vw";
-            document.querySelector('.line').style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`
-            setTimeout(function() { gameover.play(); }, 1000)
+            document.querySelector('.line').style.transform = `translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg) scale(1.5)`
+            setTimeout(function() { win.play(); }, 1000)
         }
     })
 }
 
 // game logic
-//music.play()
+gamestart.play()
 let boxes = document.getElementsByClassName("box");
+let count = 0;
 Array.from(boxes).forEach(element =>{
     let boxtext = element.querySelector('.boxtext');
     element.addEventListener('click', ()=>{
@@ -46,6 +48,12 @@ Array.from(boxes).forEach(element =>{
             turn = changeTurn();
             audioturn.play();
             checkWin();
+            count++;
+            if(count == 9) {
+                setTimeout(function() { gameover.play(); }, 1000)
+                isgameover = true;
+                document.getElementsByClassName("info")[0].innerText = "Please Reset TicTacToe.";
+            }
             if(!isgameover){
                 document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
             }
@@ -60,6 +68,8 @@ reset.addEventListener('click', ()=>{
         element.innerText = ''
     });
     turn = "X";
+    count = 0;
+    setTimeout(function() { gamestart.play(); }, 800)
     isgameover = false;
     document.querySelector('.line').style.width = "0vw";
     document.getElementsByClassName("info")[0].innerText = "Turn for " + turn;
