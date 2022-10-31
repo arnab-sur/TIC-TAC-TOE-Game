@@ -37,7 +37,7 @@ const checkWin = ()=>{
 }
 
 // game logic
-gamestart.play()
+setTimeout(function() { gamestart.play(); }, 600)
 let boxes = document.getElementsByClassName("box");
 let count = 0;
 Array.from(boxes).forEach(element =>{
